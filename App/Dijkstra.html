@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+</head>
+<title>ISK Projekt</title>
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script> -->
+<script src="jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="bootstrap-slider.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- START SIGMA IMPORTS -->
+<script src="sigma.js-1.2.1/src/sigma.core.js"></script>
+<script src="sigma.js-1.2.1/src/conrad.js"></script>
+<script src="sigma.js-1.2.1/src/utils/sigma.utils.js"></script>
+<script src="sigma.js-1.2.1/src/utils/sigma.polyfills.js"></script>
+<script src="sigma.js-1.2.1/src/sigma.settings.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.dispatcher.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.configurable.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.graph.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.camera.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.quad.js"></script>
+<script src="sigma.js-1.2.1/src/classes/sigma.classes.edgequad.js"></script>
+<script src="sigma.js-1.2.1/src/captors/sigma.captors.mouse.js"></script>
+<script src="sigma.js-1.2.1/src/captors/sigma.captors.touch.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/sigma.renderers.canvas.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/sigma.renderers.webgl.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/sigma.renderers.svg.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/sigma.renderers.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.utils.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.nodes.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.edges.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.edges.curve.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.labels.def.js"></script>
+<script src="sigma.js-1.2.1/src/renderers/svg/sigma.svg.hovers.def.js"></script>
+<script src="sigma.js-1.2.1/src/middlewares/sigma.middlewares.rescale.js"></script>
+<script src="sigma.js-1.2.1/src/middlewares/sigma.middlewares.copy.js"></script>
+<script src="sigma.js-1.2.1/src/misc/sigma.misc.animation.js"></script>
+<script src="sigma.js-1.2.1/src/misc/sigma.misc.bindEvents.js"></script>
+<script src="sigma.js-1.2.1/src/misc/sigma.misc.bindDOMEvents.js"></script>
+<script src="sigma.js-1.2.1/src/misc/sigma.misc.drawHovers.js"></script>
+<script src="html2canvas.min.js"></script>
+
+<!-- END SIGMA IMPORTS -->
+<script src="sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/worker.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.exporters.svg/sigma.exporters.svg.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.edgeLabels/settings.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.parallelEdges/utils.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="bootstrap-slider.min.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.renderers.snapshot/sigma.renderers.snapshot.js"></script>
+<script src="sigma.js-1.2.1/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+    crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+    crossorigin="anonymous"></script>
+<link href="bootstrap-toggle.min.css" rel="stylesheet">
+<script src="bootstrap-toggle.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- Modal editNode-->
+        <div class="modal fade" id="editNodeModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit node</h5>
+                        <button id="editNodeCloseButton" type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <small>Node name</small>
+                        </br>
+                        <input type="text" id="nodeNameInput" class="form-control" maxlength="10" size="10">
+                        <small id="errorNodeName" class="errorColor"></small>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editNodeSubmit" class="btn btn-primary" type="button">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="destinationUnreachableModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Destination unreachable</h5>
+                        <button id="editNodeCloseButton" type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        There is no path that leads to this destination
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="destinationUnreachableSameNodeModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Node has no self connection</h5>
+                        <button id="editNodeCloseButton" type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        This node can't be reached becaus it has no connection with himself
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal chose first and last node-->
+        <div class="modal fade" id="firstLastModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">First and last nodes are not defined</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Please select first and last node !
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal chose first node-->
+        <div class="modal fade" id="firstModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">First node is not defined</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Please select first node !
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal chose last node-->
+        <div class="modal fade" id="lastModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Last node is not defined</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Please select last node !
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal editEdge-->
+        <div class="modal fade" id="editEdgeModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit edge weight</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <small>Edge weight</small>
+                        </br>
+                        <input type="number" id="edgeWeightInput" class="form-control" min="1" max="100">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editEdgeSubmit" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="generateModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Incorrect Edges weight</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Minimal edges weight is greater than Maximum edges weight !
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Save graph</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <label for="imageName">Image name:</label>
+                            <input type="text" class="form-control" id="imageName" aria-describedby="imageNameInfo" placeholder="Enter image name">
+                            <small id="imageNameInfo" class="form-text text-muted">Image will be saved in PNG format.</small>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="snapshotButton" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mySidenav" class="sidenav noselect">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+
+            <div style="text-align:center">
+                Generate graph
+            </div>
+            <!-- number of nodes -->
+            <div class="sliderRow">
+                <small>Nodes</small>
+                <br/>
+                <input id="numOfNodes" type="text" data-slider-min="1" data-slider-max="50" data-slider-step="1" data-slider-value="15" />
+                <span id="numOfNodesVal" class="sliderVal">15</span>
+            </div>
+            <!-- number of edges -->
+            <div class="sliderRow">
+                <small>Max Edges number</small>
+                <br/>
+                <input id="numOfEdges" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="25"
+                />
+                <span id="numOfEdgesVal" class="sliderVal">25</span>
+            </div>
+            <!-- min weight -->
+            <div class="sliderRow">
+                <small>Min edges weight</small>
+                <br/>
+                <input id="minEdgesWeight" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="10"
+                />
+                <span id="minEdgesWeightVal" class="sliderVal">10</span>
+            </div>
+            <!-- max weight -->
+            <div class="sliderRow">
+                <small>Max edges weight</small>
+                <br/>
+                <input id="maxEdgesWeight" type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="50"
+                />
+                <span id="maxEdgesWeightVal" class="sliderVal">50</span>
+            </div>
+            <div class="sliderRow">
+                <input id="sameNodeCyclesCheckbox" type="checkbox">
+                <small>Same node cycles</small>
+            </div>
+            <div class="text-center">
+                <button id="generateGraphButton" type="button" class="btn btn-dark btn-sm">Generate</button>
+            </div>
+            <hr/>
+            <div class="text-center" style="padding-bottom:12px;">
+                <small>Node</small>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button id="add-node-btn" type="button" class="btn btn-dark edit-option">Add</button>
+                    <button id="remove-node-btn" type="button" class="btn btn-dark edit-option">Remove</button>
+                    <button id="edit-node-btn" type="button" class="btn btn-dark edit-option">Edit</button>
+                </div>
+            </div>
+            <div class="text-center">
+                <div style="padding-bottom:12px;">
+                    <small>Edge</small>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button id="add-edge-btn" type="button" class="btn btn-dark edit-option">Add</button>
+                        <button id="remove-edge-btn" type="button" class="btn btn-dark edit-option">Remove</button>
+                        <button id="edit-edge-btn" type="button" class="btn btn-dark edit-option">Edit</button>
+                    </div>
+                </div>
+                <button id="clear-btn" type="button" class="btn btn-dark edit-option btn-sm">Clear</button>
+            </div>
+            <hr/>
+            <div class="text-center noselect">
+                Select first and last node
+                <div style="padding:3px;"></div>
+
+                <button id="first-node-btn" type="button" class="btn btn-dark edit-option btn-sm">First</button>
+                <i class="fas fa-arrow-right"></i>
+                <button id="last-node-btn" type="button" class="btn btn-dark edit-option btn-sm">Last</button>
+                <div style="padding:8px;"></div>
+                <div class="btn-group marginTop" role="group">
+                    <button type="button" id="doubleLeftArrow" class="btn btn-dark">
+                        <i class="fas fa-angle-double-left fa-2x"></i>
+                    </button>
+                    <button type="button" id="singleLeftArrow" class="btn btn-dark">
+                        <i class="fas fa-angle-left fa-2x"></i>
+                    </button>
+                    <button type="button" id="singleRightArrow" class="btn btn-dark">
+                        <i class="fas fa-angle-right fa-2x"></i>
+                    </button>
+                    <button type="button" id="doubleRightArrow" class="btn btn-dark">
+                        <i class="fas fa-angle-double-right fa-2x"></i>
+                    </button>
+                </div>
+
+            </div>
+            <hr/>
+            <div class="text-center">
+                <button id="resetGraphButton" type="button" class="btn btn-dark btn-sm" style="padding:7px;">Reset</button>
+                <span style="padding:20px;"></span>
+                <button data-toggle="modal" data-target="#exampleModalCenter" id="download-link" type="button" class="btn btn-dark">
+                    <i class="fas fa-camera-retro"></i>
+                </button>
+
+            </div>
+
+            <br/>
+        </div>
+    </div>
+
+    <div id="graph-container"></div>
+    <span class="hamburger noselect" style="cursor:pointer;" onclick="openNav()" data-toggle="tooltip" data-placement="right"
+        title="Menu">
+        <i class="fas fa-bars fa-2x"></i>
+    </span>
+    <div id="pathTracker" class="noselect">
+        <a href="javascript:void(0)" class="closebtn" onclick="closePathTracker()">&times;</a>
+        <div class="text-center">
+            <hr/>
+            <span id="totalCost">Total cost: --</span>
+            <hr/>
+            <div id="pathText" class="text-center"></div>
+        </div>
+    </div>
+
+    <span class="comp noselect" style="cursor:pointer;" onclick="openPathTracker()" data-toggle="tooltip" data-placement="left"
+        title="Path">
+        <i class="fas fa-compass fa-2x"></i>
+    </span>
+
+    <script src="Dijkstra.js"></script>
+    <script src="graph.js"></script>
+    <script src="DijkstraTracker.js"></script>
+    <script>
+        var path = null;
+        var pathText;
+        var totalCostValue = 0;
+        var currentNodeID = null;
+
+        function disableEditMode() {
+            document.getElementById("add-node-btn").disabled = true;
+            document.getElementById("remove-node-btn").disabled = true;
+
+            document.getElementById("add-edge-btn").disabled = true;
+            document.getElementById("remove-edge-btn").disabled = true;
+            document.getElementById("edit-edge-btn").disabled = true;
+
+            document.getElementById("first-node-btn").disabled = true;
+            document.getElementById("last-node-btn").disabled = true;
+        }
+
+
+        function enableEditMode() {
+            document.getElementById("add-node-btn").disabled = false;
+            document.getElementById("remove-node-btn").disabled = false;
+
+            document.getElementById("add-edge-btn").disabled = false;
+            document.getElementById("remove-edge-btn").disabled = false;
+            document.getElementById("edit-edge-btn").disabled = false;
+
+            document.getElementById("first-node-btn").disabled = false;
+            document.getElementById("last-node-btn").disabled = false;
+        }
+
+        function commonClear() {
+            var elements = document.getElementsByClassName("edit-option active");
+            if (elements.length > 0) {
+                elements[0].classList.remove("active");
+            }
+            editAction = null;
+            firstNodeID = null;
+            lastNodeID = null;
+            path = null;
+            document.getElementById('last-node-btn').innerHTML = "Last";
+            document.getElementById('first-node-btn').innerHTML = "First";
+            totalCostValue = 0;
+            currentNodeID = null;
+            reverseWriteAll();
+        }
+
+        function clear() {
+            commonClear();
+            s.graph.clear();
+            s.refresh();
+        }
+
+        function reset() {
+            setAllInactive();
+            resizeAndColorEdges(path, false);
+            path = null;
+            firstNodeID = null;
+            lastNodeID = null;
+            s.refresh();
+            commonClear();
+        }
+
+        function createPath(ID1, ID2) {
+            var map = createGraphMap();
+            var graph = new Graph(map);
+            return graph.findShortestPath(ID1, ID2);
+        }
+
+        $(document).ready(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $(".pattern-option").click(function () {
+                document.getElementById("patterns-dropdown").innerHTML = this.innerHTML;
+            });
+
+            $("#numOfNodes,#numOfEdges,#minEdgesWeight,#maxEdgesWeight").slider();
+            $("#numOfNodes").on("change", function (slideEvt) {
+                $("#numOfNodesVal").text(slideEvt.value.newValue);
+            });
+
+            $("#numOfEdges").on("change", function (slideEvt) {
+                $("#numOfEdgesVal").text(slideEvt.value.newValue);
+            });
+
+            $("#minEdgesWeight").on("change", function (slideEvt) {
+                $("#minEdgesWeightVal").text(slideEvt.value.newValue);
+            });
+
+            $("#maxEdgesWeight").on("change", function (slideEvt) {
+                $("#maxEdgesWeightVal").text(slideEvt.value.newValue);
+            });
+
+            $('#toggle-two').bootstrapToggle({
+                on: 'Enabled',
+                off: 'Disabled'
+            });
+
+            $("#generateGraphButton").on('click', function (evt) {
+
+                var minEdgesWeight = parseInt(document.getElementById("minEdgesWeight").value);
+                var maxEdgesWeight = parseInt(document.getElementById("maxEdgesWeight").value);
+                if (minEdgesWeight > maxEdgesWeight) {
+                    $('#generateModalCenter').modal('show');
+                    return;
+                } else {
+                    clear();
+                    var numOfNodes = parseInt(document.getElementById("numOfNodes").value);
+                    var numOfEdges = parseInt(document.getElementById("numOfEdges").value);
+                    var sameNodeCycles = document.getElementById("sameNodeCyclesCheckbox").checked;
+                    renderNewGraph(numOfNodes, numOfEdges, minEdgesWeight, maxEdgesWeight, sameNodeCycles);
+                    enableEditMode();
+                }
+
+            });
+        });
+
+        function manageActive(item) {
+            if (item.classList.contains("active")) {
+                editAction = null;
+                item.classList.remove("active");
+            } else {
+                var elements = document.getElementsByClassName("edit-option active");
+                if (elements.length > 0) {
+                    elements[0].classList.remove("active");
+                }
+                item.classList.add("active");
+            }
+        }
+
+        function clearActive() {
+            editAction = null;
+            var elements = document.getElementsByClassName("edit-option active");
+            if (elements.length > 0) {
+                elements[0].classList.remove("active");
+            }
+        }
+
+        document.getElementById('add-node-btn').addEventListener('click', function (e) {
+            editAction = "addNode";
+            manageActive(this);
+        });
+
+        document.getElementById('add-edge-btn').addEventListener('click', function (e) {
+            editAction = "addEdge";
+            manageActive(this);
+        });
+
+        document.getElementById('remove-node-btn').addEventListener('click', function (e) {
+            editAction = "removeNode";
+            manageActive(this);
+        });
+
+        document.getElementById('remove-edge-btn').addEventListener('click', function (e) {
+            editAction = "removeEdge";
+            manageActive(this);
+        });
+
+        document.getElementById('edit-node-btn').addEventListener('click', function (e) {
+            editAction = "editNode";
+            manageActive(this);
+        });
+
+        document.getElementById('edit-edge-btn').addEventListener('click', function (e) {
+            editAction = "editEdge";
+            manageActive(this);
+        });
+
+        document.getElementById('first-node-btn').addEventListener('click', function (e) {
+            editAction = "selectFirstNode";
+            manageActive(this);
+        });
+
+        document.getElementById('last-node-btn').addEventListener('click', function (e) {
+            editAction = "selectLastNode";
+            manageActive(this);
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function (e) {
+            clear();
+            enableEditMode();
+        });
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+        function openPathTracker() {
+            document.getElementById("pathTracker").style.width = "200px";
+        }
+
+        function closePathTracker() {
+            document.getElementById("pathTracker").style.width = "0";
+        }
+
+        document.getElementById("resetGraphButton").addEventListener('click', (e) => {
+            clearActive();
+            reset();
+            enableEditMode();
+        });
+
+        document.getElementById("doubleLeftArrow").addEventListener('click', (e) => {
+            resizeAndColorEdges(path, false);
+            enableEditMode();
+            clearActive();
+            reverseAllColors();
+            reverseWriteAll();
+            totalCostValue = 0;
+            s.refresh();
+            openPathTracker();
+            currentNodeID = null;
+        });
+
+        document.getElementById("singleLeftArrow").addEventListener('click', (e) => {
+            clearActive();
+            // if (lastNodeID == null) {
+            //     $('#lastModalCenter').modal('show');
+            //     return;
+            // } else if (firstNodeID == null) {
+            //     $('#firstModalCenter').modal('show');
+            //     return;
+            // } else
+            if (path != null) {
+
+                if (currentNodeID == "end") {
+                    currentNodeID = lastNodeID;
+                } else if (currentNodeID != null) {
+                    currentNodeID = findPrevNodeID(currentNodeID, path);
+                }
+                if (currentNodeID != null) {
+                    if (currentNodeID == firstNodeID && firstNodeID == lastNodeID) {
+                        colorOne(firstNodeID, colorMixed);
+                    } else if (currentNodeID == lastNodeID) {
+                        colorOne(lastNodeID, lastNodeColor);
+                    } else if (currentNodeID == firstNodeID) {
+                        colorOne(firstNodeID, firstNodeColor);
+                    } else {
+                        setNodeInactive(currentNodeID);
+                    }
+
+                    if (pathText == undefined)
+                        pathText = document.getElementById("pathText");
+
+                    pathText.removeChild(pathText.lastChild);
+                    var prevNodeID = findPrevNodeID(currentNodeID, path);
+                    if (prevNodeID != null) {
+                        var cost = calculateCost(prevNodeID, currentNodeID);
+                        totalCostValue -= cost;
+                        updateTotalCost(totalCostValue);
+                        revertVisitEdgeBetweenNodes(currentNodeID, prevNodeID);
+                        pathText.removeChild(pathText.lastChild);
+                        pathText.removeChild(pathText.lastChild);
+                        pathText.removeChild(pathText.lastChild);
+                        if (prevNodeID == firstNodeID) {
+                            document.getElementById("totalCost").innerHTML = "Total cost: --";
+                        }
+                    } else {
+                        document.getElementById("totalCost").innerHTML = "Total cost: --";
+                        revertVisitEdgeBetweenNodes(currentNodeID, currentNodeID);
+                        currentNodeID = null;
+                        enableEditMode();
+                    }
+                    s.refresh();
+                    openPathTracker();
+                }
+            }
+        });
+
+        document.getElementById("singleRightArrow").addEventListener('click', (e) => {
+            clearActive();
+            if (lastNodeID == null) {
+                $('#lastModalCenter').modal('show');
+                return;
+            } else if (firstNodeID == null) {
+                $('#firstModalCenter').modal('show');
+                return;
+            } else if (firstNodeID == lastNodeID && !isSameEdgeBetweenNodes(firstNodeID, lastNodeID, s.graph.edges())) {
+                $('#destinationUnreachableSameNodeModalCenter').modal('show');
+                return;
+            } else if (path == null) {
+                if (currentNodeID == null) {
+                    currentNodeID = firstNodeID;
+                }
+                path = createPath(currentNodeID, lastNodeID);
+                if (path == null) {
+                    $('#destinationUnreachableModalCenter').modal('show');
+                    return;
+                }
+                isPathEdited = false;
+            } else if (isPathEdited) {
+                if (currentNodeID == null) {
+                    currentNodeID = firstNodeID;
+                }
+                path = createPath(currentNodeID, lastNodeID);
+                if (path == null) {
+                    $('#destinationUnreachableModalCenter').modal('show');
+                    return;
+                }
+                isPathEdited = false;
+            }
+
+            disableEditMode();
+
+            if (pathText == undefined)
+                pathText = document.getElementById("pathText");
+
+            if (currentNodeID != "end") {
+                if (currentNodeID == null) {
+                    currentNodeID = firstNodeID;
+                }
+
+                var prevNodeID = findPrevNodeID(currentNodeID, path);
+                if (prevNodeID != null) {
+                    var cost = calculateCost(prevNodeID, currentNodeID);
+                    totalCostValue += cost;
+                    writeArrowWithCost(cost, pathText);
+                    updateTotalCost(totalCostValue);
+                    visitEdgeBetweenNodes(prevNodeID, currentNodeID);
+                } else if (currentNodeID == firstNodeID && currentNodeID == lastNodeID) {
+                    visitEdgeBetweenNodes(currentNodeID, currentNodeID);
+                }
+
+                writeOneNode(currentNodeID, pathText);
+                colorOne(currentNodeID);
+
+                var nextNodeID = findNextNodeID(currentNodeID, path);
+                if (nextNodeID == null) {
+                    currentNodeID = "end";
+                } else {
+                    currentNodeID = nextNodeID;
+                }
+
+                s.refresh();
+                openPathTracker();
+            }
+        });
+
+        document.getElementById("doubleRightArrow").addEventListener('click', function (e) {
+            clearActive();
+            if (lastNodeID == null) {
+                $('#lastModalCenter').modal('show');
+                return;
+            } else if (firstNodeID == null) {
+                $('#firstModalCenter').modal('show');
+                return;
+            } else if (firstNodeID == lastNodeID && !isSameEdgeBetweenNodes(firstNodeID, lastNodeID, s.graph.edges())) {
+                $('#destinationUnreachableSameNodeModalCenter').modal('show');
+                return;
+            } else if (path == null) {
+                if (currentNodeID == null) {
+                    currentNodeID = firstNodeID;
+                }
+                path = createPath(currentNodeID, lastNodeID);
+                if (path == null) {
+                    $('#destinationUnreachableModalCenter').modal('show');
+                    return;
+                }
+                isPathEdited = false;
+            } else if (isPathEdited) {
+                if (currentNodeID == null) {
+                    currentNodeID = firstNodeID;
+                }
+                path = createPath(currentNodeID, lastNodeID);
+                if (path == null) {
+                    $('#destinationUnreachableModalCenter').modal('show');
+                    return;
+                }
+                isPathEdited = false;
+            }
+            disableEditMode();
+            if (currentNodeID != "end") {
+                if (currentNodeID == null)
+                    currentNodeID = firstNodeID;
+                var index = path.indexOf(currentNodeID);
+                colorAll(path.slice(index));
+                resizeAndColorEdges(path, true);
+                totalCostValue = writeAll(path, index);
+                if (path.length > 1) {
+                    updateTotalCost(totalCostValue);
+                }
+                currentNodeID = "end";
+                openPathTracker();
+                s.refresh();
+            }
+        });
+
+        function minmax(value, min, max) {
+            if (parseInt(value) < min || isNaN(parseInt(value)))
+                return 1;
+            else if (parseInt(value) > max)
+                return 100;
+            else return value;
+        }
+
+        $(document).ready(function () {
+            document.getElementById('editNodeSubmit').addEventListener('click', (e) => {
+                var name = document.querySelector("#nodeNameInput").value;
+                var nodeArray = s.graph.nodes();
+                var length = nodeArray.length;
+                for (var i = 0; i < length; i++) {
+                    if (nodeArray[i].label == name && nodeIDEdit != nodeArray[i].id) {
+                        document.querySelector("#errorNodeName").innerHTML = "Name already exists";
+                        return;
+                    }
+                }
+
+                if (nodeIDEdit != null && name != null && name != "") {
+                    var element = document.getElementById(nodeIDEdit);
+                    if (element != null) {
+                        document.getElementById(nodeIDEdit).innerHTML = name;
+                    }
+                    editNode(nodeIDEdit, name);
+                    document.querySelector("#errorNodeName").innerHTML = "Total cost: --";
+                    $('#editNodeModalCenter').modal('hide');
+                    if (firstNodeID != null && firstNodeID == nodeIDEdit) {
+                        document.getElementById('first-node-btn').innerHTML = name;
+                    } else if (lastNodeID != null && lastNodeID == nodeIDEdit) {
+                        document.getElementById('last-node-btn').innerHTML = name;
+                    }
+                }
+            });
+
+            document.getElementById("editNodeCloseButton").addEventListener('click', (e) => {
+                document.querySelector("#errorNodeName").innerHTML = "Total cost: --";
+                $('#editNodeModalCenter').modal('hide');
+            });
+        });
+
+        document.getElementById('editEdgeSubmit').addEventListener('click', (e) => {
+            var weight = document.querySelector("#edgeWeightInput").value;
+
+            if (parseInt(weight) < 1 || isNaN(parseInt(weight)))
+                weight = "1";
+            else if (parseInt(weight) > 100)
+                weight = "100";
+
+            if (editEdgeId != null && weight != null) {
+                editEdge(editEdgeId, weight);
+                isPathEdited = true;
+            }
+        });
+    </script>
+</body>
+
+</html>
